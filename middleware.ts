@@ -1,7 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isProtectedRoute = createRouteMatcher(["/chat(.*)", "/api/chat"]);
+const isProtectedRoute = createRouteMatcher(["/chat(.*)", "/api/chat", "/api/memories(.*)"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
@@ -17,7 +17,7 @@ export default clerkMiddleware(async (auth, req) => {
 
 export const config = {
   matcher: [
-    "/((?!.*\\..*|_next|api/chat).*)", // exclude /api/chat
+    "/((?!.*\\..*|_next).*)", // Include all routes except static files and _next
     "/",
     "/(api|trpc)(.*)",
   ],

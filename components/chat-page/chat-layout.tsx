@@ -70,7 +70,17 @@ export function ChatLayout({
       return newChat;
     } catch (error) {
       console.error("Error creating chat:", error);
-      setError("Failed to create chat. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Failed to create chat";
+      
+      if (errorMessage.includes("Authentication required") || errorMessage.includes("Unauthorized")) {
+        setError("Please sign in again to continue chatting.");
+        // Redirect to sign-in page after a short delay
+        setTimeout(() => {
+          window.location.href = "/sign-in";
+        }, 2000);
+      } else {
+        setError(errorMessage);
+      }
       throw error;
     } finally {
       setIsLoading(false);
@@ -94,7 +104,17 @@ export function ChatLayout({
       }
     } catch (error) {
       console.error("Error updating chat:", error);
-      setError("Failed to update chat. Please try again.");
+      const errorMessage = error instanceof Error ? error.message : "Failed to update chat";
+      
+      if (errorMessage.includes("Authentication required") || errorMessage.includes("Unauthorized")) {
+        setError("Please sign in again to continue chatting.");
+        // Redirect to sign-in page after a short delay
+        setTimeout(() => {
+          window.location.href = "/sign-in";
+        }, 2000);
+      } else {
+        setError(errorMessage);
+      }
     }
   };
 

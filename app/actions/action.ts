@@ -109,10 +109,12 @@ export async function createChat(
   try {
     const user = await currentUser();
 
-    if (!user) {
-      throw new Error("Unauthorized");
+    if (!user || !user.id) {
+      console.error("Authentication failed: No user or user.id found");
+      throw new Error("Authentication required. Please sign in again.");
     }
 
+    console.log("User authenticated for createChat:", { userId: user.id });
     await dbConnect();
 
     const chat = await Chat.create({
@@ -193,12 +195,22 @@ export async function updateChat(
   attachments?: MessageAttachment[]
 ): Promise<ChatItem> {
   try {
-    const user = await currentUser();
-
-    if (!user) {
-      throw new Error("Unauthorized");
+    // Try to get the current user with a retry mechanism
+    let user = await currentUser();
+    
+    // If no user on first try, wait a bit and try again
+    if (!user || !user.id) {
+      console.log("First authentication attempt failed, retrying...");
+      await new Promise(resolve => setTimeout(resolve, 100));
+      user = await currentUser();
     }
 
+    if (!user || !user.id) {
+      console.error("Authentication failed: No user or user.id found after retry");
+      throw new Error("Authentication required. Please sign in again.");
+    }
+
+    console.log("User authenticated:", { userId: user.id, chatId });
     await dbConnect();
 
     const chat = await Chat.findOne({ _id: chatId, userId: user.id });
