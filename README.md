@@ -175,7 +175,7 @@ This project is open source and available under the [MIT License](LICENSE).
 **Debjyoti** - Full Stack Developer
 
 - GitHub: [@Debjyoti2004](https://github.com/Debjyoti2004)
-- Project Link: [ChatGPT Clone](https://ChatGPT.debjyoti.co.in)
+- Project Link: [ChatGPT Clone](https://chatgpt.debjyoti.co.in)
 
 ---
 
