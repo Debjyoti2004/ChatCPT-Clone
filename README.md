@@ -30,7 +30,7 @@ A modern, full-featured ChatGPT clone built with cutting-edge web technologies. 
 
 | Category | Technology |
 |----------|------------|
-| **Framework** | Next.js 15 (App Router) |
+| **Framework** | Next.js 18 (App Router) |
 | **Database** | MongoDB |
 | **Authentication** | Clerk |
 | **AI Integration** | OpenAI GPT API |
